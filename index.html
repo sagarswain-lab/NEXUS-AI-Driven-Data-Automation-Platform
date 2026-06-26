@@ -1,0 +1,3735 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS | AI-Driven Data Automation Platform</title>
+  <meta name="description"
+    content="NEXUS is the next-generation AI automation platform that transforms raw data into intelligent, self-optimizing workflows. Automate, analyze, and accelerate at scale.">
+  <meta property="og:title" content="NEXUS | AI-Driven Data Automation Platform">
+  <meta property="og:description"
+    content="Transform raw data into intelligent workflows with NEXUS — the AI automation platform built for enterprise scale.">
+  <meta property="og:image" content="https://nexus.ai/og-image.png">
+  <meta property="og:url" content="https://nexus.ai">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NEXUS | AI-Driven Data Automation Platform">
+  <meta name="twitter:description" content="Transform raw data into intelligent workflows with NEXUS.">
+  <link rel="canonical" href="https://nexus.ai">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f8c800">
+  <script
+    type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NEXUS","description":"AI-Driven Data Automation Platform","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"AggregateOffer","priceCurrency":"INR","lowPrice":"999","highPrice":"7999"},"provider":{"@type":"Organization","name":"NEXUS AI Inc.","url":"https://nexus.ai"}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    @property --border-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    :root {
+      --bg-deep: #010101;
+      --bg-mid: #0d1f28;
+      --bg-primary: #172b36;
+      --teal: #114c5a;
+      --teal-lt: #1a6b7e;
+      --gold: #f8c800;
+      --orange: #f89830;
+      --mint: #d9e8e3;
+      --text-1: #eef4f2;
+      --text-2: #a8c5bc;
+      --text-3: #5a8077;
+      --border: rgba(248, 200, 0, 0.12);
+      --border-t: rgba(26, 107, 126, 0.25);
+      --glass: rgba(17, 76, 90, 0.18);
+      --glass-g: rgba(248, 200, 0, 0.05);
+      --ff-head: 'JetBrains Mono', monospace;
+      --ff-body: 'Inter', sans-serif;
+      --ease-o: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--bg-deep);
+      color: var(--text-1);
+      overflow-x: hidden;
+      line-height: 1.6
+    }
+
+    /* ── CURSOR */
+    #cur-dot,
+    #cur-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%)
+    }
+
+    #cur-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--gold)
+    }
+
+    #cur-ring {
+      width: 26px;
+      height: 26px;
+      border: 1.5px solid rgba(248, 200, 0, 0.6);
+      transition: width .2s, height .2s, opacity .2s;
+      opacity: .7
+    }
+
+    body:has(a:hover) #cur-ring,
+    body:has(button:hover) #cur-ring {
+      width: 40px;
+      height: 40px;
+      opacity: .4
+    }
+
+    /* ── LOADER */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-deep);
+      z-index: 9998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px
+    }
+
+    .ld-cube {
+      width: 44px;
+      height: 44px;
+      position: relative
+    }
+
+    .ld-cube span {
+      position: absolute;
+      inset: 0;
+      border: 2px solid transparent;
+      border-radius: 6px;
+      animation: ldSpin 0.7s linear infinite
+    }
+
+    .ld-cube span:nth-child(1) {
+      border-top-color: var(--gold);
+      animation-delay: 0s
+    }
+
+    .ld-cube span:nth-child(2) {
+      border-right-color: var(--teal-lt);
+      animation-delay: .17s;
+      inset: 6px
+    }
+
+    .ld-cube span:nth-child(3) {
+      border-bottom-color: var(--orange);
+      animation-delay: .34s;
+      inset: 12px
+    }
+
+    @keyframes ldSpin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .ld-txt {
+      font-family: var(--ff-head);
+      font-size: 11px;
+      letter-spacing: .35em;
+      color: var(--text-3);
+      text-transform: uppercase
+    }
+
+    /* ── NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background .3s, padding .3s, backdrop-filter .3s
+    }
+
+    nav.sc {
+      background: rgba(1, 1, 1, .88);
+      backdrop-filter: blur(24px);
+      padding: 12px 48px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .n-logo {
+      font-family: var(--ff-head);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: .1em;
+      text-decoration: none
+    }
+
+    .n-logo span {
+      color: var(--text-1)
+    }
+
+    .n-links {
+      display: flex;
+      gap: 32px;
+      list-style: none
+    }
+
+    .n-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      letter-spacing: .04em;
+      transition: color .18s
+    }
+
+    .n-links a:hover {
+      color: var(--gold)
+    }
+
+    .n-cta {
+      padding: 9px 22px;
+      background: var(--gold);
+      color: var(--bg-deep);
+      font-family: var(--ff-head);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .18s, transform .15s
+    }
+
+    .n-cta:hover {
+      background: var(--orange);
+      transform: translateY(-1px)
+    }
+
+    /* ── HERO */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden
+    }
+
+    #three-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(transparent 0, rgba(0, 0, 0, .022) 1px, transparent 2px);
+      pointer-events: none;
+      z-index: 2
+    }
+
+    .h-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      max-width: 920px;
+      padding: 0 24px
+    }
+
+    .h-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--glass-g);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-family: var(--ff-head);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      opacity: 0
+    }
+
+    .h-title {
+      font-family: var(--ff-head);
+      font-size: clamp(2.8rem, 8vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.02em;
+      margin-bottom: 22px;
+      opacity: 0
+    }
+
+    .t-line {
+      display: block
+    }
+
+    .t-brand {
+      color: var(--gold);
+      position: relative;
+      display: inline-block
+    }
+
+    .t-brand::before,
+    .t-brand::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%
+    }
+
+    .t-brand::before {
+      color: var(--orange);
+      clip-path: polygon(0 18%, 100% 18%, 100% 42%, 0 42%);
+      animation: gl1 5s infinite
+    }
+
+    .t-brand::after {
+      color: #00e5ff;
+      clip-path: polygon(0 58%, 100% 58%, 100% 76%, 0 76%);
+      animation: gl2 5s infinite
+    }
+
+    @keyframes gl1 {
+
+      0%,
+      88%,
+      100% {
+        transform: translateX(0);
+        opacity: 0
+      }
+
+      90% {
+        transform: translateX(-5px);
+        opacity: 1
+      }
+
+      92% {
+        transform: translateX(5px);
+        opacity: 1
+      }
+
+      94% {
+        transform: translateX(-2px);
+        opacity: 1
+      }
+
+      96% {
+        opacity: 0
+      }
+    }
+
+    @keyframes gl2 {
+
+      0%,
+      88%,
+      100% {
+        transform: translateX(0);
+        opacity: 0
+      }
+
+      91% {
+        transform: translateX(5px);
+        opacity: 1
+      }
+
+      93% {
+        transform: translateX(-5px);
+        opacity: 1
+      }
+
+      95% {
+        transform: translateX(2px);
+        opacity: 1
+      }
+
+      97% {
+        opacity: 0
+      }
+    }
+
+    .h-sub {
+      font-size: clamp(.95rem, 2vw, 1.2rem);
+      color: var(--text-2);
+      max-width: 580px;
+      margin: 0 auto 36px;
+      line-height: 1.75;
+      opacity: 0
+    }
+
+    .h-acts {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0
+    }
+
+    .btn-p {
+      padding: 15px 38px;
+      background: var(--gold);
+      color: var(--bg-deep);
+      font-family: var(--ff-head);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .18s, transform .15s, box-shadow .18s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .btn-p:hover {
+      background: var(--orange);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(248, 200, 0, .28)
+    }
+
+    .btn-g {
+      padding: 15px 38px;
+      background: transparent;
+      color: var(--text-1);
+      font-family: var(--ff-head);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      border: 1px solid var(--border-t);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .18s, color .18s, transform .15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .btn-g:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px)
+    }
+
+    .h-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0
+    }
+
+    .h-scroll span {
+      font-family: var(--ff-head);
+      font-size: 9px;
+      letter-spacing: .35em;
+      color: var(--text-3);
+      text-transform: uppercase
+    }
+
+    .h-scrollline {
+      width: 1px;
+      height: 38px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: sp 2s ease-in-out infinite
+    }
+
+    @keyframes sp {
+
+      0%,
+      100% {
+        opacity: .25
+      }
+
+      50% {
+        opacity: 1
+      }
+    }
+
+    /* ── SHARED */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px
+    }
+
+    .s-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--ff-head);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .28em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px
+    }
+
+    .s-tag::before {
+      content: '';
+      width: 22px;
+      height: 1px;
+      background: var(--gold)
+    }
+
+    .s-title {
+      font-family: var(--ff-head);
+      font-size: clamp(1.9rem, 4vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      color: var(--text-1);
+      margin-bottom: 14px
+    }
+
+    .s-sub {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 560px;
+      line-height: 1.75
+    }
+
+    /* ── REVEAL */
+    .rv {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity .6s var(--ease-o), transform .6s var(--ease-o)
+    }
+
+    .rv.vis {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .rv.d1 {
+      transition-delay: .1s
+    }
+
+    .rv.d2 {
+      transition-delay: .2s
+    }
+
+    .rv.d3 {
+      transition-delay: .3s
+    }
+
+    .rv.d4 {
+      transition-delay: .4s
+    }
+
+    /* ── ABOUT */
+    #about {
+      padding: 110px 0;
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%)
+    }
+
+    .ab-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      margin-top: 56px
+    }
+
+    .ab-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px
+    }
+
+    .sc-card {
+      padding: 28px;
+      background: var(--glass);
+      border: 1px solid var(--border-t);
+      border-radius: 10px;
+      transition: border-color .18s, transform .18s
+    }
+
+    .sc-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px)
+    }
+
+    .sc-n {
+      font-family: var(--ff-head);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 6px;
+      display: block
+    }
+
+    .sc-l {
+      font-size: 12px;
+      color: var(--text-2);
+      letter-spacing: .04em
+    }
+
+    /* ── FEATURES / BENTO */
+    #features {
+      padding: 110px 0;
+      background: var(--bg-primary)
+    }
+
+    .f-hd {
+      margin-bottom: 56px
+    }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px
+    }
+
+    .bc {
+      padding: 36px;
+      background: var(--glass);
+      border: 1px solid var(--border-t);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: border-color .2s, transform .2s, background .2s;
+      position: relative;
+      overflow: hidden
+    }
+
+    .bc::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(248, 200, 0, .04), transparent 65%);
+      opacity: 0;
+      transition: opacity .3s
+    }
+
+    .bc:hover::before,
+    .bc.act::before {
+      opacity: 1
+    }
+
+    .bc:hover,
+    .bc.act {
+      border-color: rgba(248, 200, 0, .5);
+      transform: translateY(-2px);
+      background: rgba(17, 76, 90, .35)
+    }
+
+    .bc.act {
+      box-shadow: 0 0 0 1px rgba(248, 200, 0, .18), 0 0 40px rgba(248, 200, 0, .06) inset
+    }
+
+    .bc:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px
+    }
+
+    .b-lg {
+      grid-column: span 5
+    }
+
+    .b-7 {
+      grid-column: span 7
+    }
+
+    .b-md {
+      grid-column: span 4
+    }
+
+    .b-sm {
+      grid-column: span 3
+    }
+
+    .b-8 {
+      grid-column: span 8
+    }
+
+    .b-ico {
+      width: 44px;
+      height: 44px;
+      padding: 10px;
+      background: var(--glass-g);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .b-ico svg {
+      stroke: var(--gold);
+      fill: none;
+      width: 22px;
+      height: 22px
+    }
+
+    .b-ico svg[data-solid] {
+      fill: var(--gold);
+      stroke: none
+    }
+
+    .b-ttl {
+      font-family: var(--ff-head);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 10px
+    }
+
+    .b-dsc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.65
+    }
+
+    .b-tag {
+      display: inline-block;
+      padding: 3px 9px;
+      background: var(--glass-g);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: var(--ff-head);
+      font-size: 9px;
+      color: var(--gold);
+      letter-spacing: .12em;
+      margin-top: 14px
+    }
+
+    /* ── ACCORDION */
+    .acc-list {
+      display: none
+    }
+
+    .acc-item {
+      border-bottom: 1px solid var(--border-t);
+      overflow: hidden
+    }
+
+    .acc-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      cursor: pointer;
+      gap: 14px;
+      user-select: none
+    }
+
+    .acc-hd:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+      border-radius: 4px
+    }
+
+    .acc-hl {
+      display: flex;
+      align-items: center;
+      gap: 14px
+    }
+
+    .acc-ic {
+      width: 34px;
+      height: 34px;
+      padding: 7px;
+      background: var(--glass-g);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .acc-ic svg {
+      stroke: var(--gold);
+      fill: none;
+      width: 18px;
+      height: 18px
+    }
+
+    .acc-ic svg[data-solid] {
+      fill: var(--gold);
+      stroke: none
+    }
+
+    .acc-ttl {
+      font-family: var(--ff-head);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-1);
+      transition: color .18s
+    }
+
+    .acc-chv {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      transition: transform .32s var(--ease-io)
+    }
+
+    .acc-chv svg {
+      stroke: var(--text-3);
+      width: 18px;
+      height: 18px
+    }
+
+    .acc-item.open .acc-chv {
+      transform: rotate(180deg)
+    }
+
+    .acc-item.open .acc-ttl {
+      color: var(--gold)
+    }
+
+    .acc-body {
+      height: 0;
+      overflow: hidden;
+      transition: height .35s var(--ease-io)
+    }
+
+    .acc-bi {
+      padding: 0 0 20px 48px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7
+    }
+
+    /* ── PRICING */
+    #pricing {
+      padding: 110px 0;
+      background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-deep) 100%)
+    }
+
+    .pr-ctrl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      margin: 44px 0;
+      flex-wrap: wrap
+    }
+
+    .bt-wrap {
+      display: flex;
+      align-items: center;
+      gap: 11px
+    }
+
+    .bt-lbl {
+      font-family: var(--ff-head);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-3);
+      letter-spacing: .05em;
+      transition: color .18s
+    }
+
+    .bt-lbl.on {
+      color: var(--gold)
+    }
+
+    .tgl {
+      position: relative;
+      width: 50px;
+      height: 26px
+    }
+
+    .tgl input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute
+    }
+
+    .tgl-sl {
+      position: absolute;
+      inset: 0;
+      background: var(--teal);
+      border-radius: 100px;
+      cursor: pointer;
+      border: 1px solid var(--border-t);
+      transition: background .18s
+    }
+
+    .tgl-sl::before {
+      content: '';
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      top: 3px;
+      background: var(--gold);
+      border-radius: 50%;
+      transition: transform .2s var(--ease-o)
+    }
+
+    .tgl input:checked+.tgl-sl::before {
+      transform: translateX(24px)
+    }
+
+    .tgl input:checked+.tgl-sl {
+      background: var(--teal-lt)
+    }
+
+    .sv-badge {
+      display: inline-flex;
+      padding: 2px 9px;
+      background: rgba(248, 200, 0, .12);
+      border: 1px solid var(--gold);
+      border-radius: 100px;
+      font-family: var(--ff-head);
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: .12em;
+      opacity: 0;
+      transform: scale(.8);
+      transition: opacity .18s, transform .2s var(--ease-o);
+      pointer-events: none
+    }
+
+    .sv-badge.on {
+      opacity: 1;
+      transform: scale(1)
+    }
+
+    .curr-sel {
+      padding: 9px 34px 9px 14px;
+      background: var(--glass);
+      border: 1px solid var(--border-t);
+      border-radius: 7px;
+      color: var(--text-1);
+      font-family: var(--ff-head);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%235a8077' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m19.5 8.25l-7.5 7.5l-7.5-7.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 14px;
+      transition: border-color .18s
+    }
+
+    .curr-sel:hover,
+    .curr-sel:focus {
+      border-color: var(--gold);
+      outline: none
+    }
+
+    .curr-sel option {
+      background-color: var(--bg-primary);
+      color: var(--text-1);
+    }
+
+    .pr-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px
+    }
+
+    .pc {
+      padding: 36px 32px;
+      background: var(--glass);
+      border: 1px solid var(--border-t);
+      border-radius: 14px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden
+    }
+
+    .pc:hover {
+      transform: translateY(-4px);
+      border-color: rgba(248, 200, 0, .45);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .3)
+    }
+
+    .pc.feat {
+      border-color: rgba(248, 200, 0, .5);
+      box-shadow: 0 0 50px rgba(248, 200, 0, .07)
+    }
+
+    .feat-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 5px 14px;
+      background: var(--gold);
+      color: var(--bg-deep);
+      font-family: var(--ff-head);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      border-radius: 0 14px 0 10px
+    }
+
+    .pl-name {
+      font-family: var(--ff-head);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      margin-bottom: 22px
+    }
+
+    .pl-pw {
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      margin-bottom: 6px
+    }
+
+    .pl-sym {
+      font-family: var(--ff-head);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold)
+    }
+
+    .pl-val {
+      font-family: var(--ff-head);
+      font-size: clamp(2.2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      color: var(--text-1);
+      line-height: 1
+    }
+
+    .pl-per {
+      font-size: 13px;
+      color: var(--text-3);
+      font-weight: 500;
+      margin-left: 3px
+    }
+
+    .pl-dsc {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-bottom: 28px;
+      line-height: 1.65
+    }
+
+    .pl-div {
+      height: 1px;
+      background: var(--border-t);
+      margin-bottom: 24px
+    }
+
+    .pl-feats {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px
+    }
+
+    .pl-feats li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-2)
+    }
+
+    .pl-feats li::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f8c800' d='m9 12.75l-2.25-2.25-1.5 1.5L9 15.75l9-9-1.5-1.5z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+      flex-shrink: 0
+    }
+
+    .pl-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 7px;
+      font-family: var(--ff-head);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      cursor: pointer;
+      transition: all .18s;
+      border: 2px solid transparent
+    }
+
+    .pl-btn-p {
+      background: var(--gold);
+      color: var(--bg-deep);
+      border-color: var(--gold)
+    }
+
+    .pl-btn-p:hover {
+      background: var(--orange);
+      border-color: var(--orange);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(248, 200, 0, .22)
+    }
+
+    .pl-btn-g {
+      background: transparent;
+      color: var(--text-1);
+      border-color: var(--border-t)
+    }
+
+    .pl-btn-g:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-1px)
+    }
+
+    /* ── STATS */
+    #stats {
+      padding: 96px 0;
+      background: var(--bg-deep);
+      position: relative;
+      overflow: hidden
+    }
+
+    #stats::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(17, 76, 90, .18), transparent 65%);
+      pointer-events: none
+    }
+
+    .st-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      text-align: center;
+      position: relative
+    }
+
+    .ct-n {
+      font-family: var(--ff-head);
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px
+    }
+
+    .ct-l {
+      font-size: 13px;
+      color: var(--text-2);
+      letter-spacing: .04em
+    }
+
+    /* ── FOOTER */
+    footer {
+      padding: 72px 0 36px;
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-t)
+    }
+
+    .ft-cta {
+      text-align: center;
+      padding: 72px 40px;
+      margin-bottom: 72px;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--glass)
+    }
+
+    .ft-cta-border {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 1px;
+      background: conic-gradient(from var(--border-angle, 0deg), var(--gold), var(--teal-lt), var(--orange), var(--teal-lt), var(--gold));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: brRot 4s linear infinite
+    }
+
+    @keyframes brRot {
+      to {
+        --border-angle: 360deg
+      }
+    }
+
+    .ft-cta h2 {
+      font-family: var(--ff-head);
+      font-size: clamp(1.6rem, 3.5vw, 2.7rem);
+      font-weight: 800;
+      color: var(--text-1);
+      margin-bottom: 12px
+    }
+
+    .ft-cta h2 span {
+      color: var(--gold)
+    }
+
+    .ft-cta p {
+      color: var(--text-2);
+      margin-bottom: 36px;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 14px
+    }
+
+    .ft-cta-acts {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    .ft-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 44px;
+      margin-bottom: 44px
+    }
+
+    .ft-brand .n-logo {
+      font-size: 24px;
+      display: block;
+      margin-bottom: 14px;
+      text-decoration: none
+    }
+
+    .ft-brand p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.75;
+      max-width: 260px
+    }
+
+    .ft-col h4 {
+      font-family: var(--ff-head);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      margin-bottom: 18px
+    }
+
+    .ft-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .ft-col a {
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color .16s
+    }
+
+    .ft-col a:hover {
+      color: var(--gold)
+    }
+
+    .ft-bot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+      border-top: 1px solid var(--border-t);
+      font-size: 12px;
+      color: var(--text-3)
+    }
+
+    .ft-bot-r {
+      font-family: var(--ff-head);
+      font-size: 11px;
+      color: var(--text-3);
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    /* ── MOBILE MENU OVERLAY */
+    .mob-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 101
+    }
+
+    .mob-toggle svg {
+      stroke: var(--text-1);
+      width: 22px;
+      height: 22px
+    }
+
+    .mob-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(1, 1, 1, .96);
+      backdrop-filter: blur(28px);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .32s var(--ease-io), visibility .32s
+    }
+
+    .mob-overlay.open {
+      opacity: 1;
+      visibility: visible
+    }
+
+    .mob-ov-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px
+    }
+
+    .mob-close {
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      color: var(--text-1);
+      transition: color .18s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mob-close:hover {
+      color: var(--gold)
+    }
+
+    .mob-close svg {
+      stroke: currentColor;
+      width: 22px;
+      height: 22px
+    }
+
+    .mob-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 32px 24px;
+      flex: 1
+    }
+
+    .mob-nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      font-family: var(--ff-head);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-2);
+      text-decoration: none;
+      border-radius: 10px;
+      transition: background .18s, color .18s
+    }
+
+    .mob-nav a:hover,
+    .mob-nav a:focus {
+      background: var(--glass);
+      color: var(--gold)
+    }
+
+    .mob-nav a svg {
+      stroke: var(--text-3);
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      transition: stroke .18s
+    }
+
+    .mob-nav a:hover svg {
+      stroke: var(--gold)
+    }
+
+    .mob-nav-cta {
+      margin: 0 24px 32px;
+      padding: 15px;
+      background: var(--gold);
+      color: var(--bg-deep);
+      font-family: var(--ff-head);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background .18s
+    }
+
+    .mob-nav-cta:hover {
+      background: var(--orange)
+    }
+
+    /* ── SCROLL-TO-TOP */
+    #scroll-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 90;
+      width: 42px;
+      height: 42px;
+      background: var(--glass);
+      border: 1px solid var(--border-t);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: opacity .2s ease-out, visibility .2s, transform .2s ease-out, border-color .18s, background .18s
+    }
+
+    #scroll-top.vis {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0)
+    }
+
+    #scroll-top:hover {
+      border-color: var(--gold);
+      background: rgba(248, 200, 0, .12)
+    }
+
+    #scroll-top svg {
+      width: 18px;
+      height: 18px
+    }
+
+    /* ── LOGO CLOUD */
+    .logo-cloud {
+      padding: 40px 0;
+      background: rgba(1, 1, 1, 0.45);
+      border-top: 1px solid var(--border-t);
+      border-bottom: 1px solid var(--border-t);
+    }
+
+    .logo-cloud-ttl {
+      font-family: var(--ff-head);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .25em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .logo-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 56px;
+      flex-wrap: wrap;
+      opacity: 0.7;
+    }
+
+    .logo-item {
+      display: flex;
+      align-items: center;
+      font-family: var(--ff-head);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-2);
+      gap: 8px;
+      transition: color 0.25s, opacity 0.25s;
+      cursor: default;
+    }
+
+    .logo-item:hover {
+      color: var(--gold);
+      opacity: 1;
+    }
+
+    .logo-item svg {
+      fill: currentColor;
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ── WORKFLOW BUILDER */
+    #workflow {
+      padding: 110px 0;
+      background: var(--bg-deep);
+      border-top: 1px solid var(--border-t);
+    }
+
+    .wf-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .wf-canvas {
+      position: relative;
+      background: rgba(13, 31, 40, 0.3);
+      border: 1px solid var(--border-t);
+      border-radius: 16px;
+      padding: 40px 24px;
+      min-height: 380px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    .wf-canvas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(var(--border) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .wf-nodes {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      min-height: 280px;
+    }
+
+    .wf-col-nodes {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .wf-node {
+      background: var(--bg-primary);
+      border: 1.5px solid var(--border-t);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 142px;
+      cursor: pointer;
+      position: relative;
+      z-index: 10;
+      transition: transform 0.2s var(--ease-o), border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .wf-node:hover,
+    .wf-node.act {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(248, 200, 0, 0.12);
+    }
+
+    .wf-node.act {
+      animation: nodeActGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes nodeActGlow {
+      from { box-shadow: 0 0 4px rgba(248, 200, 0, 0.15), 0 4px 12px rgba(248, 200, 0, 0.05); }
+      to { box-shadow: 0 0 16px rgba(248, 200, 0, 0.4), 0 4px 20px rgba(248, 200, 0, 0.1); }
+    }
+
+    .wf-node-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      background: var(--glass);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .wf-node-icon svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .wf-node-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wf-node-title {
+      font-family: var(--ff-head);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+
+    .wf-node-sub {
+      font-size: 8px;
+      color: var(--text-3);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .wf-node-status {
+      position: absolute;
+      top: -8px;
+      right: 12px;
+      padding: 2px 6px;
+      border-radius: 100px;
+      font-family: var(--ff-head);
+      font-size: 7px;
+      font-weight: 700;
+      background: var(--teal);
+      color: var(--mint);
+      border: 1px solid var(--border-t);
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.18s, transform 0.18s;
+      pointer-events: none;
+    }
+
+    .wf-node:hover .wf-node-status,
+    .wf-node.act .wf-node-status {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .wf-svg-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .wf-flow-line {
+      stroke: rgba(248, 200, 0, 0.08);
+      stroke-width: 1.5;
+      fill: none;
+      transition: stroke 0.3s;
+    }
+
+    .wf-flow-line.active {
+      stroke: var(--gold);
+      stroke-width: 2;
+      stroke-dasharray: 6, 6;
+      animation: flowDash 1.5s linear infinite;
+      filter: drop-shadow(0 0 3px rgba(248, 200, 0, 0.4));
+    }
+
+    @keyframes flowDash {
+      to {
+        stroke-dashoffset: -24;
+      }
+    }
+
+    @keyframes pulseMove {
+      0% {
+        offset-distance: 0%;
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        offset-distance: 100%;
+        opacity: 0;
+      }
+    }
+
+    /* ── PERFORMANCE DASHBOARD */
+    #performance {
+      padding: 110px 0;
+      background: var(--bg-primary);
+    }
+
+    .db-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .db-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .db-card {
+      background: var(--glass);
+      border: 1px solid var(--border-t);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .db-card-label {
+      font-family: var(--ff-head);
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .db-card-val {
+      font-family: var(--ff-head);
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .db-card-trend {
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .db-trend-up {
+      color: #10b981;
+    }
+
+    .db-panel {
+      background: rgba(13, 31, 40, 0.3);
+      border: 1px solid var(--border-t);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .db-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .db-panel-title {
+      font-family: var(--ff-head);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+
+    .db-badge-live {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+      font-family: var(--ff-head);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+    }
+
+    .db-badge-live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulseRed 1.5s infinite;
+    }
+
+    @keyframes pulseRed {
+      0% {
+        transform: scale(0.9);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.3);
+        opacity: 0.4;
+      }
+
+      100% {
+        transform: scale(0.9);
+        opacity: 1;
+      }
+    }
+
+    .db-charts-row {
+      display: grid;
+      grid-template-columns: 1fr 2.4fr;
+      gap: 32px;
+    }
+
+    .radial-gauge {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .radial-gauge-svg {
+      transform: rotate(-90deg);
+      width: 96px;
+      height: 96px;
+    }
+
+    .radial-gauge-bg {
+      fill: none;
+      stroke: var(--border-t);
+      stroke-width: 7;
+    }
+
+    .radial-gauge-fill {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 7;
+      stroke-linecap: round;
+      stroke-dasharray: 251.2;
+      stroke-dashoffset: 251.2;
+      transition: stroke-dashoffset 0.8s ease;
+    }
+
+    .radial-gauge-txt {
+      position: absolute;
+      top: 48px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--ff-head);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-1);
+    }
+
+    .line-chart-wrap {
+      width: 100%;
+      height: 140px;
+      position: relative;
+    }
+
+    .line-chart-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .line-chart-path {
+      fill: none;
+      stroke: url(#chart-gradient);
+      stroke-width: 2.2;
+      transition: d 0.15s ease;
+    }
+
+    .line-chart-fill {
+      fill: url(#chart-bg-gradient);
+      transition: d 0.15s ease;
+    }
+
+    .line-chart-grid {
+      stroke: var(--border-t);
+      stroke-width: 0.75;
+    }
+
+    /* ── FAQ SECTION */
+    #faq {
+      padding: 110px 0;
+      background: var(--bg-deep);
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.7fr;
+      gap: 64px;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: var(--glass);
+      border: 1px solid var(--border-t);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item:hover,
+    .faq-item.open {
+      border-color: rgba(248, 200, 0, 0.3);
+    }
+
+    .faq-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      cursor: pointer;
+      user-select: none;
+      gap: 12px;
+    }
+
+    .faq-ttl {
+      font-family: var(--ff-head);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-1);
+      transition: color 0.18s;
+    }
+
+    .faq-chv {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.3s var(--ease-io);
+      flex-shrink: 0;
+    }
+
+    .faq-chv svg {
+      stroke: var(--text-3);
+      width: 18px;
+      height: 18px;
+    }
+
+    .faq-item.open .faq-chv {
+      transform: rotate(180deg);
+    }
+
+    .faq-item.open .faq-ttl {
+      color: var(--gold);
+    }
+
+    .faq-body {
+      height: 0;
+      overflow: hidden;
+      transition: height 0.32s var(--ease-io);
+    }
+
+    .faq-bi {
+      padding: 0 24px 18px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+
+    /* ── REDUCED MOTION */
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important
+      }
+
+      .rv {
+        opacity: 1;
+        transform: none
+      }
+
+      #three-canvas {
+        display: none
+      }
+    }
+
+    /* ── RESPONSIVE */
+    @media(max-width:1024px) {
+      .container {
+        padding: 0 32px
+      }
+
+      nav,
+      nav.sc {
+        padding: 16px 32px
+      }
+
+      .bento {
+        display: none
+      }
+
+      .acc-list {
+        display: block
+      }
+
+      .pr-grid {
+        grid-template-columns: 1fr;
+        max-width: 380px;
+        margin: 0 auto
+      }
+
+      .st-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px
+      }
+
+      .ab-grid {
+        grid-template-columns: 1fr;
+        gap: 44px
+      }
+
+      .ft-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .wf-grid,
+      .db-grid,
+      .faq-grid {
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+
+      .db-charts-row {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media(max-width:640px) {
+      .container {
+        padding: 0 20px
+      }
+
+      nav,
+      nav.sc {
+        padding: 14px 20px
+      }
+
+      .n-links {
+        display: none
+      }
+
+      .n-cta {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+      }
+
+      /* When mobile menu is open, hide the header CTA & nav links so only logo + hamburger show under overlay */
+      body.nav-open .n-cta {
+        display: none !important;
+      }
+
+      /* Drop header z-index below the overlay when menu is open */
+      body.nav-open #site-header {
+        z-index: 1 !important;
+      }
+
+      .mob-toggle,
+      .mob-close {
+        border: none !important;
+        background: none !important;
+        padding: 4px !important;
+        color: var(--text-1) !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        transition: color .18s;
+      }
+
+      .mob-toggle:hover,
+      .mob-toggle:focus,
+      .mob-close:hover,
+      .mob-close:focus {
+        color: var(--gold) !important;
+      }
+
+      .mob-toggle svg,
+      .mob-close svg {
+        stroke: currentColor !important;
+        width: 22px !important;
+        height: 22px !important;
+      }
+
+      .mob-ov-top {
+        padding: 14px 20px;
+      }
+
+      .mob-overlay {
+        overflow-y: auto;
+      }
+
+      .mob-ov-top,
+      .mob-nav,
+      .mob-nav-cta {
+        flex-shrink: 0;
+      }
+
+      .h-acts {
+        flex-direction: column;
+        align-items: center
+      }
+
+      .btn-p,
+      .btn-g {
+        width: 100%;
+        max-width: 270px;
+        justify-content: center
+      }
+
+      .pr-ctrl {
+        gap: 16px
+      }
+
+      .ft-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 32px;
+      }
+
+      .ft-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .ft-brand p {
+        max-width: 160px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .ft-col {
+        text-align: center;
+      }
+
+      .ft-col ul {
+        align-items: center;
+      }
+
+      .ft-bot {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .ft-bot > div {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px !important;
+      }
+
+      .ft-cta-acts {
+        flex-direction: column;
+        align-items: center
+      }
+
+      .ft-cta-acts .btn-p,
+      .ft-cta-acts .btn-g {
+        width: 100%;
+        max-width: 270px;
+        justify-content: center
+      }
+
+      .logo-grid {
+        gap: 28px 36px;
+      }
+
+      .wf-nodes {
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .wf-col-nodes {
+        width: 100%;
+        gap: 24px;
+      }
+
+      .wf-node {
+        min-width: 100%;
+      }
+
+      .wf-svg-layer {
+        display: none;
+      }
+
+      /* Mobile workflow: show golden left-border connectors between nodes */
+      .wf-col-nodes {
+        position: relative;
+      }
+
+      .wf-col-nodes::before {
+        content: '';
+        position: absolute;
+        left: 22px;
+        top: 56px;
+        bottom: 56px;
+        width: 2px;
+        background: linear-gradient(to bottom, var(--gold) 0%, rgba(248,200,0,0.15) 100%);
+        border-radius: 2px;
+        animation: mobileFlowPulse 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes mobileFlowPulse {
+        from { opacity: 0.3; }
+        to   { opacity: 1; }
+      }
+
+      .wf-node.act {
+        border-left: 2.5px solid var(--gold) !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cur-dot" aria-hidden="true"></div>
+  <div id="cur-ring" aria-hidden="true"></div>
+
+  <!-- Loader -->
+  <div id="loader" role="status" aria-label="Loading NEXUS platform">
+    <div class="ld-cube" aria-hidden="true"><span></span><span></span><span></span></div>
+    <p class="ld-txt">Initializing NEXUS</p>
+  </div>
+
+  <!-- NAV -->
+  <header id="site-header">
+    <nav id="nav" role="navigation" aria-label="Main navigation">
+      <a href="#" class="n-logo" aria-label="NEXUS Home">NEX<span>US</span></a>
+      <ul class="n-links" role="list">
+        <li><a href="#about">Platform</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#workflow">Workflow</a></li>
+        <li><a href="#performance">Performance</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#pricing" class="n-cta" aria-label="Get started with NEXUS">Get Started</a>
+      <!-- Mobile hamburger — uses chevron-up.svg asset as menu icon -->
+      <button class="mob-toggle" id="mob-open" aria-label="Open navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </nav>
+  </header>
+
+  <!-- MOBILE MENU OVERLAY — uses x-mark.svg (close) + chevron-left.svg (link icons) -->
+  <div class="mob-overlay" id="mob-overlay" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <div class="mob-ov-top">
+      <a href="#" class="n-logo" aria-label="NEXUS Home">NEX<span>US</span></a>
+      <button class="mob-close" id="mob-close" aria-label="Close navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <nav class="mob-nav" aria-label="Mobile navigation links">
+      <!-- chevron-left.svg used as directional indicator for each link -->
+      <a href="#about"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg> Platform</a>
+      <a href="#features"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg> Features</a>
+      <a href="#workflow"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg> Workflow</a>
+      <a href="#performance"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg> Performance</a>
+      <a href="#pricing"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg> Pricing</a>
+      <a href="#faq"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg> FAQ</a>
+    </nav>
+    <a href="#pricing" class="mob-nav-cta">Get Started</a>
+  </div>
+
+  <main id="main-content">
+    <!-- HERO -->
+    <section id="hero" aria-label="NEXUS platform hero">
+      <canvas id="three-canvas" aria-hidden="true"></canvas>
+      <div class="h-content">
+        <div class="h-badge" id="h-badge" aria-label="Next Generation AI Automation">
+          <!-- cube-16-solid.svg -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 16 16" aria-hidden="true">
+            <path fill="#f8c800"
+              d="M8.372 1.349a.75.75 0 0 0-.744 0l-4.81 2.748L8 7.131l5.182-3.034zM14 5.357L8.75 8.43v6.005l4.872-2.784A.75.75 0 0 0 14 11zm-6.75 9.078V8.43L2 5.357V11c0 .27.144.518.378.651z" />
+          </svg>
+          Next-Gen AI Data Automation
+        </div>
+        <h1 class="h-title" id="h-title">
+          <span class="t-line">AUTOMATE.</span>
+          <span class="t-line">ANALYZE.</span>
+          <span class="t-line t-brand" data-text="NEXUS.">NEXUS.</span>
+        </h1>
+        <p class="h-sub" id="h-sub">
+          The AI-native data automation platform that turns raw chaos into intelligent,
+          self-optimizing workflows. Built for teams that operate at machine velocity.
+        </p>
+        <div class="h-acts" id="h-acts">
+          <a href="#pricing" class="btn-p" aria-label="Start free trial">
+            Start Free Trial
+            <!-- arrow-trending-up.svg -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 0 1 5.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+            </svg>
+          </a>
+          <a href="#features" class="btn-g" aria-label="Explore platform features">
+            Explore Platform
+            <!-- chevron-right.svg -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="m8.25 4.5l7.5 7.5l-7.5 7.5" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="h-scroll" id="h-scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="h-scrollline"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" aria-label="About NEXUS">
+      <div class="container">
+        <div class="ab-grid">
+          <div>
+            <div class="s-tag rv">The Platform</div>
+            <h2 class="s-title rv d1">Data intelligence<br>at machine velocity</h2>
+            <p class="s-sub rv d2">NEXUS ingests, processes, and acts on your data streams in real-time. From raw
+              ingestion to decision automation — every layer is AI-native, every pipeline is self-optimizing.</p>
+            <div style="margin-top:28px" class="rv d3">
+              <a href="#features" class="btn-g" aria-label="See all platform features">
+                <!-- search.svg -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fill="currentColor"
+                    d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33l-1.42 1.42l-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
+                </svg>
+                Explore All Features
+              </a>
+            </div>
+          </div>
+          <div class="ab-stats">
+            <div class="sc-card rv"><span class="sc-n">99.9%</span><span class="sc-l">Uptime SLA</span></div>
+            <div class="sc-card rv d1"><span class="sc-n">&lt;10ms</span><span class="sc-l">Pipeline Latency</span>
+            </div>
+            <div class="sc-card rv d2"><span class="sc-n">500+</span><span class="sc-l">Integrations</span></div>
+            <div class="sc-card rv d3"><span class="sc-n">SOC2</span><span class="sc-l">Type II Certified</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE 2: BENTO / ACCORDION -->
+    <section id="features" aria-label="Platform features">
+      <div class="container">
+        <div class="f-hd">
+          <div class="s-tag rv">Core Capabilities</div>
+          <h2 class="s-title rv d1">Everything your data<br>stack demands</h2>
+          <p class="s-sub rv d2">Six mission-critical modules. One unified platform. Infinite automation potential.</p>
+        </div>
+
+        <!-- BENTO GRID — Desktop (>1024px) -->
+        <div class="bento rv" id="bentoGrid" role="list" aria-label="Platform features grid">
+
+          <div class="bc b-lg" data-index="0" role="listitem" tabindex="0" aria-label="AI Pipeline Engine">
+            <div class="b-ico" aria-hidden="true">
+              <!-- arrow-path.svg -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                <path fill="none" stroke="#f8c800" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+              </svg>
+            </div>
+            <div class="b-ttl">AI Pipeline Engine</div>
+            <div class="b-dsc">Self-healing data pipelines that adapt to schema drift, retry failures intelligently, and scale automatically with your workload.</div>
+            <span class="b-tag">CORE MODULE</span>
+          </div>
+
+          <div class="bc b-7" data-index="1" role="listitem" tabindex="0" aria-label="Real-time Analytics">
+            <div class="b-ico" aria-hidden="true">
+              <!-- chart-pie.svg -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                <g fill="none" stroke="#f8c800" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                  <path d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+                  <path d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+                </g>
+              </svg>
+            </div>
+            <div class="b-ttl">Real-time Analytics</div>
+            <div class="b-dsc">Stream analytics with sub-10ms query latency. Live trends, anomaly detection, and predictive dashboards as your data flows in.</div>
+            <span class="b-tag">ANALYTICS</span>
+          </div>
+
+          <div class="bc b-md" data-index="2" role="listitem" tabindex="0" aria-label="500+ Integrations">
+            <div class="b-ico" aria-hidden="true">
+              <!-- link.svg -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path fill="none" stroke="#f8c800" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+              </svg>
+            </div>
+            <div class="b-ttl">500+ Integrations</div>
+            <div class="b-dsc">Native connectors for every major warehouse, CRM, and API. Connect any source instantly, zero config.</div>
+            <span class="b-tag">CONNECTIVITY</span>
+          </div>
+
+          <div class="bc b-md" data-index="3" role="listitem" tabindex="0" aria-label="Workflow Automation">
+            <div class="b-ico" aria-hidden="true">
+              <!-- cog-8-tooth.svg -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                <g fill="none" stroke="#f8c800" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                  <path
+                    d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
+                  <path d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0Z" />
+                </g>
+              </svg>
+            </div>
+            <div class="b-ttl">Workflow Automation</div>
+            <div class="b-dsc">Zero-code automation chains with AI-suggested optimizations and one-click deploy.</div>
+            <span class="b-tag">AUTOMATION</span>
+          </div>
+
+          <div class="bc b-md" data-index="4" role="listitem" tabindex="0" aria-label="Semantic AI Search">
+            <div class="b-ico" aria-hidden="true">
+              <!-- search.svg -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 20 20" data-solid>
+                <path fill="#f8c800"
+                  d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33l-1.42 1.42l-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
+              </svg>
+            </div>
+            <div class="b-ttl">Semantic AI Search</div>
+            <div class="b-dsc">Natural language queries across all your data. Ask questions, get answers. No SQL, no data team required.</div>
+            <span class="b-tag">SEARCH</span>
+          </div>
+
+          <div class="bc b-8" data-index="5" role="listitem" tabindex="0" aria-label="Growth Intelligence">
+            <div class="b-ico" aria-hidden="true">
+              <!-- arrow-trending-up.svg -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                <path fill="none" stroke="#f8c800" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 0 1 5.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+              </svg>
+            </div>
+            <div class="b-ttl">Growth Intelligence</div>
+            <div class="b-dsc">Predictive models that surface opportunities before they become obvious. Revenue forecasting, churn prediction, and market signal detection — all automated with zero setup.</div>
+            <span class="b-tag">AI INTELLIGENCE</span>
+          </div>
+
+        </div>
+
+        <!-- ACCORDION — Mobile (≤1024px) -->
+        <div class="acc-list" id="accList" role="list" aria-label="Platform features list"></div>
+
+      </div>
+    </section>
+
+    <!-- WORKFLOW BUILDER -->
+    <section id="workflow" aria-label="Workflow Automation Builder">
+      <div class="container">
+        <div class="wf-grid">
+          <div class="rv">
+            <div class="s-tag">Visual orchestrator</div>
+            <h2 class="s-title">Build logic at scale</h2>
+            <p class="s-sub">Design, deploy, and manage sophisticated AI workflows through an intuitive canvas
+              interface. Connect data sources, train agents, run custom code blocks — all with zero infrastructure
+              overhead.</p>
+            <div style="margin-top:28px">
+              <a href="#pricing" class="btn-p" aria-label="Build your first workflow">Build a Workflow</a>
+            </div>
+          </div>
+          <div class="wf-canvas rv d1">
+            <svg class="wf-svg-layer"></svg>
+            <div class="wf-nodes">
+              <!-- Col 1: Triggers -->
+              <div class="wf-col-nodes">
+                <div class="wf-node act" id="node-webhook" data-target="webhook" role="button" tabindex="0"
+                  aria-label="Pipeline Ingest node">
+                  <div class="wf-node-icon">
+                    <!-- arrow-path.svg -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    </svg>
+                  </div>
+                  <div class="wf-node-info">
+                    <span class="wf-node-title">Pipeline Ingest</span>
+                    <span class="wf-node-sub">AI Pipeline Engine</span>
+                  </div>
+                  <div class="wf-node-status">ACTIVE</div>
+                </div>
+                <div class="wf-node" id="node-email" data-target="email" role="button" tabindex="0"
+                  aria-label="Connected API node">
+                  <div class="wf-node-icon">
+                    <!-- link.svg -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                    </svg>
+                  </div>
+                  <div class="wf-node-info">
+                    <span class="wf-node-title">Connected API</span>
+                    <span class="wf-node-sub">500+ Integrations</span>
+                  </div>
+                  <div class="wf-node-status">STANDBY</div>
+                </div>
+              </div>
+              <!-- Col 2: Core Processing -->
+              <div class="wf-col-nodes">
+                <div class="wf-node act" id="node-ai" data-target="ai" role="button" tabindex="0"
+                  aria-label="Automation Engine node">
+                  <div class="wf-node-icon">
+                    <!-- cog-8-tooth.svg -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                        <path
+                          d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
+                        <path d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0Z" />
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="wf-node-info">
+                    <span class="wf-node-title">Automation Engine</span>
+                    <span class="wf-node-sub">Workflow Automation</span>
+                  </div>
+                  <div class="wf-node-status">RUNNING</div>
+                </div>
+                <div class="wf-node" id="node-python" data-target="python" role="button" tabindex="0"
+                  aria-label="Semantic Search Node">
+                  <div class="wf-node-icon">
+                    <!-- search.svg -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true" data-solid>
+                      <path fill="currentColor"
+                        d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33l-1.42 1.42l-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
+                    </svg>
+                  </div>
+                  <div class="wf-node-info">
+                    <span class="wf-node-title">Semantic Search</span>
+                    <span class="wf-node-sub">Semantic AI Search</span>
+                  </div>
+                  <div class="wf-node-status">STANDBY</div>
+                </div>
+              </div>
+              <!-- Col 3: Actions -->
+              <div class="wf-col-nodes">
+                <div class="wf-node act" id="node-slack" data-target="slack" role="button" tabindex="0"
+                  aria-label="Analytics Stream node">
+                  <div class="wf-node-icon">
+                    <!-- chart-pie.svg -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                        <path d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+                        <path d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="wf-node-info">
+                    <span class="wf-node-title">Analytics Stream</span>
+                    <span class="wf-node-sub">Real-time Analytics</span>
+                  </div>
+                  <div class="wf-node-status">COMPLETED</div>
+                </div>
+                <div class="wf-node act" id="node-db" data-target="db" role="button" tabindex="0"
+                  aria-label="Growth Vector node">
+                  <div class="wf-node-icon">
+                    <!-- arrow-trending-up.svg -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 0 1 5.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                    </svg>
+                  </div>
+                  <div class="wf-node-info">
+                    <span class="wf-node-title">Growth Vector</span>
+                    <span class="wf-node-sub">Growth Intelligence</span>
+                  </div>
+                  <div class="wf-node-status">COMPLETED</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERFORMANCE METRICS & DASHBOARD -->
+    <section id="performance" aria-label="System Performance Dashboard">
+      <div class="container">
+        <div class="db-grid">
+          <div class="db-metrics">
+            <div class="db-card rv">
+              <span class="db-card-label">Pipeline Throughput</span>
+              <span class="db-card-val" id="db-val-load">94,204 eps</span>
+              <span class="db-card-trend db-trend-up">
+                <!-- arrow-path.svg -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+                Active ingest streams
+              </span>
+            </div>
+            <div class="db-card rv d1">
+              <span class="db-card-label">Query Latency</span>
+              <span class="db-card-val" id="db-val-latency">6.8ms</span>
+              <span class="db-card-trend db-trend-up">
+                <!-- chart-pie.svg -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
+                  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                    <path d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+                    <path d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+                  </g>
+                </svg>
+                Sub-10ms queries
+              </span>
+            </div>
+            <div class="db-card rv d2">
+              <span class="db-card-label">Active Connectors</span>
+              <span class="db-card-val" id="db-val-tokens">512</span>
+              <span class="db-card-trend db-trend-up">
+                <!-- link-solid.svg -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" data-solid>
+                  <path fill="currentColor" fill-rule="evenodd"
+                    d="M19.902 4.098a3.75 3.75 0 0 0-5.304 0l-4.5 4.5a3.75 3.75 0 0 0 1.035 6.037.75.75 0 0 1-.646 1.353 5.25 5.25 0 0 1-1.449-8.45l4.5-4.5a5.25 5.25 0 1 1 7.424 7.424l-1.757 1.757a.75.75 0 1 1-1.06-1.06l1.757-1.757a3.75 3.75 0 0 0 0-5.304Zm-7.389 4.267a.75.75 0 0 1 1-.353 5.25 5.25 0 0 1 1.449 8.45l-4.5 4.5a5.25 5.25 0 1 1-7.424-7.424l1.757-1.757a.75.75 0 1 1 1.06 1.06l-1.757 1.757a3.75 3.75 0 1 0 5.304 5.304l4.5-4.5a3.75 3.75 0 0 0-1.035-6.037.75.75 0 0 1-.354-1Z"
+                    clip-rule="evenodd" />
+                </svg>
+                SaaS integrations
+              </span>
+            </div>
+            <div class="db-card rv d3">
+              <span class="db-card-label">Automation Rate</span>
+              <span class="db-card-val" id="db-val-rate">96.7%</span>
+              <span class="db-card-trend db-trend-up">
+                <!-- arrow-trending-up.svg -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 0 1 5.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                </svg>
+                Autonomous flows
+              </span>
+            </div>
+          </div>
+          <div class="db-panel rv d1">
+            <div class="db-panel-header">
+              <span class="db-panel-title">Optimized for performance</span>
+              <span class="db-badge-live">LIVE METRICS</span>
+            </div>
+            <div class="db-charts-row">
+              <div class="radial-gauge">
+                <svg class="radial-gauge-svg">
+                  <circle class="radial-gauge-bg" cx="48" cy="48" r="40"></circle>
+                  <circle class="radial-gauge-fill" id="radial-fill" cx="48" cy="48" r="40"></circle>
+                </svg>
+                <div class="radial-gauge-txt" id="radial-val">96%</div>
+                <span style="font-size:9px;color:var(--text-3);font-family:var(--ff-head);text-transform:uppercase">Core
+                  Load</span>
+              </div>
+              <div class="line-chart-wrap">
+                <svg class="line-chart-svg" id="realtime-chart" viewBox="0 0 400 140" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="chart-gradient" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="var(--gold)"></stop>
+                      <stop offset="50%" stop-color="var(--orange)"></stop>
+                      <stop offset="100%" stop-color="var(--teal-lt)"></stop>
+                    </linearGradient>
+                    <linearGradient id="chart-bg-gradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(248, 200, 0, 0.15)"></stop>
+                      <stop offset="100%" stop-color="rgba(248, 200, 0, 0)"></stop>
+                    </linearGradient>
+                  </defs>
+                  <!-- Grid lines -->
+                  <line class="line-chart-grid" x1="0" y1="35" x2="400" y2="35"></line>
+                  <line class="line-chart-grid" x1="0" y1="70" x2="400" y2="70"></line>
+                  <line class="line-chart-grid" x1="0" y1="105" x2="400" y2="105"></line>
+                  <!-- Paths -->
+                  <path class="line-chart-fill" d=""></path>
+                  <path class="line-chart-path" d=""></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE 1: PRICING MATRIX -->
+    <section id="pricing" aria-labelledby="pricing-title">
+      <div class="container">
+        <div style="text-align:center" class="rv">
+          <div class="s-tag" style="justify-content:center">Pricing</div>
+          <h2 class="s-title" id="pricing-title">Transparent. Scalable.<br>Built for your growth.</h2>
+          <p class="s-sub" style="margin:0 auto">Start free. Scale as you grow. No hidden fees, no surprise invoices.
+          </p>
+        </div>
+
+        <div class="pr-ctrl">
+          <!-- Billing Toggle -->
+          <div class="bt-wrap">
+            <span class="bt-lbl on" id="lbl-mo">Monthly</span>
+            <label class="tgl" aria-label="Toggle annual billing">
+              <input type="checkbox" id="billing-toggle" aria-checked="false" role="switch">
+              <span class="tgl-sl"></span>
+            </label>
+            <span class="bt-lbl" id="lbl-yr">Annual</span>
+            <span class="sv-badge" id="sv-badge" aria-live="polite" aria-atomic="true">SAVE 20%</span>
+          </div>
+          <!-- Currency Selector -->
+          <select class="curr-sel" id="curr-sel" aria-label="Select display currency">
+            <option value="INR">₹ INR</option>
+            <option value="USD">$ USD</option>
+            <option value="EUR">€ EUR</option>
+          </select>
+        </div>
+
+        <div class="pr-grid">
+          <!-- Starter -->
+          <div class="pc rv" role="article" aria-label="Starter pricing plan">
+            <div class="pl-name">Starter</div>
+            <div class="pl-pw">
+              <span class="pl-sym" data-price-symbol="starter">₹</span>
+              <span class="pl-val" data-price-value="starter">999</span>
+              <span class="pl-per" data-price-period="starter">/mo</span>
+            </div>
+            <p class="pl-dsc">For indie builders and early-stage teams automating their first workflows.</p>
+            <div class="pl-div"></div>
+            <ul class="pl-feats" aria-label="Starter plan features">
+              <li>5 Active Pipelines</li>
+              <li>100K Data Events / mo</li>
+              <li>10 Automation Workflows</li>
+              <li>Standard Analytics Dashboard</li>
+              <li>Email Support</li>
+            </ul>
+            <button class="pl-btn pl-btn-g" aria-label="Get started with Starter plan">Get Started</button>
+          </div>
+          <!-- Pro -->
+          <div class="pc feat rv d1" role="article" aria-label="Pro pricing plan — most popular">
+            <div class="feat-badge" aria-label="Most popular plan">MOST POPULAR</div>
+            <div class="pl-name">Pro</div>
+            <div class="pl-pw">
+              <span class="pl-sym" data-price-symbol="pro">₹</span>
+              <span class="pl-val" data-price-value="pro">2499</span>
+              <span class="pl-per" data-price-period="pro">/mo</span>
+            </div>
+            <p class="pl-dsc">For scaling teams that need full automation power and advanced AI capabilities.</p>
+            <div class="pl-div"></div>
+            <ul class="pl-feats" aria-label="Pro plan features">
+              <li>Unlimited Pipelines</li>
+              <li>10M Data Events / mo</li>
+              <li>Unlimited Workflows</li>
+              <li>AI Analytics + Forecasting</li>
+              <li>500+ Native Integrations</li>
+              <li>Priority 24h Support</li>
+            </ul>
+            <button class="pl-btn pl-btn-p" aria-label="Start free trial on Pro plan">Start Free Trial</button>
+          </div>
+          <!-- Enterprise -->
+          <div class="pc rv d2" role="article" aria-label="Enterprise pricing plan">
+            <div class="pl-name">Enterprise</div>
+            <div class="pl-pw">
+              <span class="pl-sym" data-price-symbol="enterprise">₹</span>
+              <span class="pl-val" data-price-value="enterprise">7999</span>
+              <span class="pl-per" data-price-period="enterprise">/mo</span>
+            </div>
+            <p class="pl-dsc">For enterprise teams with custom data requirements, compliance needs, and dedicated
+              infrastructure.</p>
+            <div class="pl-div"></div>
+            <ul class="pl-feats" aria-label="Enterprise plan features">
+              <li>Everything in Pro</li>
+              <li>Unlimited Data Events</li>
+              <li>Custom AI Model Training</li>
+              <li>SOC2 Compliance Suite</li>
+              <li>Dedicated Infrastructure</li>
+              <li>24/7 Dedicated Support + SLA</li>
+              <li>Onboarding & Migration Help</li>
+            </ul>
+            <button class="pl-btn pl-btn-g" aria-label="Contact sales for Enterprise plan">Contact Sales</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section id="stats" aria-labelledby="stats-title">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:56px">
+          <div class="s-tag rv" style="justify-content:center">By The Numbers</div>
+          <h2 class="s-title rv d1" id="stats-title">Trusted by data teams<br>building at scale</h2>
+        </div>
+        <div class="st-grid">
+          <div class="rv">
+            <span class="ct-n" data-target="12000" data-suffix="+" aria-label="Over 12,000 active teams">0</span>
+            <span class="ct-l">Active Teams Worldwide</span>
+          </div>
+          <div class="rv d1">
+            <span class="ct-n" data-target="2" data-suffix="B+"
+              aria-label="2 billion plus events processed daily">0</span>
+            <span class="ct-l">Events Processed Daily</span>
+          </div>
+          <div class="rv d2">
+            <span class="ct-n" data-target="99" data-suffix=".9%" aria-label="99.9 percent platform uptime">0</span>
+            <span class="ct-l">Platform Uptime</span>
+          </div>
+          <div class="rv d3">
+            <span class="ct-n" data-target="500" data-suffix="+" aria-label="Over 500 native integrations">0</span>
+            <span class="ct-l">Native Integrations</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" aria-labelledby="faq-title">
+          <div class="container">
+            <div class="faq-grid">
+              <div class="rv">
+                <div class="s-tag">Common Inquiries</div>
+                <h2 class="s-title" id="faq-title">Frequently<br>Asked Questions</h2>
+                <p class="s-sub">Have questions about integrations, enterprise security, pricing models, or self-hosted
+                  deployment? We've got answers.</p>
+                <div style="margin-top:28px">
+                  <a href="#about" class="btn-g" aria-label="Contact our support team">Contact Support</a>
+                </div>
+              </div>
+              <div class="faq-list rv d1">
+                <!-- Item 1 -->
+                <div class="faq-item" role="article" aria-label="FAQ Item 1">
+                  <div class="faq-hd" role="button" tabindex="0" aria-expanded="false"
+                    aria-label="What is the NEXUS platform?">
+                    <span class="faq-ttl">What is the NEXUS platform?</span>
+                    <div class="faq-chv" aria-hidden="true">
+                      <!-- chevron-down.svg -->
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                        <path d="m19.5 8.25l-7.5 7.5l-7.5-7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="faq-body">
+                    <div class="faq-bi">
+                      NEXUS is an enterprise-grade AI-native agent and data automation workspace. It allows you to
+                      ingest diverse data streams, build multi-agent logic, deploy workflows with zero-code visual tools
+                      or Python scripts, and scale instantly.
+                    </div>
+                  </div>
+                </div>
+                <!-- Item 2 -->
+                <div class="faq-item" role="article" aria-label="FAQ Item 2">
+                  <div class="faq-hd" role="button" tabindex="0" aria-expanded="false"
+                    aria-label="How does the bento-to-accordion context lock work?">
+                    <span class="faq-ttl">How does the bento-to-accordion context lock work?</span>
+                    <div class="faq-chv" aria-hidden="true">
+                      <!-- chevron-down.svg -->
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                        <path d="m19.5 8.25l-7.5 7.5l-7.5-7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="faq-body">
+                    <div class="faq-bi">
+                      Our layout monitors viewport widths. When crossing the 1024px breakpoint, any active feature card
+                      you were hovering or clicking in the desktop Bento grid automatically synchronizes its state index
+                      to the mobile Accordion list, opening the exact same panel smoothly.
+                    </div>
+                  </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="faq-item" role="article" aria-label="FAQ Item 3">
+                  <div class="faq-hd" role="button" tabindex="0" aria-expanded="false"
+                    aria-label="Is my enterprise data secure?">
+                    <span class="faq-ttl">Is my enterprise data secure?</span>
+                    <div class="faq-chv" aria-hidden="true">
+                      <!-- chevron-down.svg -->
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                        <path d="m19.5 8.25l-7.5 7.5l-7.5-7.5" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="faq-body">
+                    <div class="faq-bi">
+                      Yes. NEXUS uses end-to-end encryption for all data transport and storage. We support SOC2 Type II
+                      compliance standards and allow model fine-tuning with isolated VPC environments to guarantee
+                      complete privacy.
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SCROLL-TO-TOP — chevron-up-solid.svg -->
+  <button id="scroll-top" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="#f8c800" fill-rule="evenodd"
+        d="M11.47 7.72a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 1 1-1.06 1.06L12 9.31l-6.97 6.97a.75.75 0 0 1-1.06-1.06l7.5-7.5Z"
+        clip-rule="evenodd" />
+    </svg>
+  </button>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="container">
+      <!-- CTA Banner -->
+      <div class="ft-cta rv" aria-label="Call to action">
+        <div class="ft-cta-border" aria-hidden="true"></div>
+        <h2>Ready to automate<br><span>everything?</span></h2>
+        <p>Join 12,000+ data teams using NEXUS to build the future of intelligent automation.</p>
+        <div class="ft-cta-acts">
+          <a href="#pricing" class="btn-p" aria-label="Start free NEXUS trial with no credit card">Start Free — No
+            Credit Card</a>
+          <a href="#features" class="btn-g" aria-label="Book a NEXUS product demo">
+            <!-- link.svg -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+            </svg>
+            Book a Demo
+          </a>
+        </div>
+      </div>
+      <div class="ft-grid">
+        <div class="ft-brand">
+          <a href="#" class="n-logo" aria-label="NEXUS Home">NEXUS</a>
+          <p>The AI-native data automation platform for teams that need to move faster than their data.</p>
+        </div>
+        <div class="ft-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="#features">Pipeline Engine</a></li>
+            <li><a href="#features">Real-time Analytics</a></li>
+            <li><a href="#features">Integrations</a></li>
+            <li><a href="#features">Automation</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Security</a></li>
+            <li><a href="#">SOC2 Report</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ft-bot">
+        <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+          <span>© 2026 NEXUS AI Inc. All rights reserved.</span>
+          <a href="#"
+            style="color:var(--text-3);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .18s"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text-3)'"
+            aria-label="Back to top">
+            Back to top
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="m4.5 15.75l7.5-7.5l7.5 7.5" />
+            </svg>
+          </a>
+        </div>
+        <div class="ft-bot-r">
+          Built with
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 16 16" aria-hidden="true">
+            <path fill="#f8c800"
+              d="M8.372 1.349a.75.75 0 0 0-.744 0l-4.81 2.748L8 7.131l5.182-3.034zM14 5.357L8.75 8.43v6.005l4.872-2.784A.75.75 0 0 0 14 11zm-6.75 9.078V8.43L2 5.357V11c0 .27.144.518.378.651z" />
+          </svg>
+          NEXUS
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- THREE.JS CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script>
+    // ═══════════════════════════════════════════════
+    // 1. LOADER — fade out within 400ms
+    // ═══════════════════════════════════════════════
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      const anim = loader.animate(
+        [{ opacity: 1 }, { opacity: 0 }],
+        { duration: 120, delay: 0, fill: 'forwards', easing: 'ease-out' }
+      );
+      anim.finished.then(() => {
+        loader.style.display = 'none';
+        runHeroEntry();
+      });
+    });
+
+    // ═══════════════════════════════════════════════
+    // 2. HERO ENTRY — WAAPI, total ≤500ms (loader 120ms + hero 330ms = 450ms)
+    // ═══════════════════════════════════════════════
+    function runHeroEntry() {
+      const nav = document.getElementById('nav');
+      const badge = document.getElementById('h-badge');
+      const title = document.getElementById('h-title');
+      const sub = document.getElementById('h-sub');
+      const acts = document.getElementById('h-acts');
+      const scrl = document.getElementById('h-scroll');
+      const cfg = { fill: 'forwards', easing: 'cubic-bezier(0.16,1,0.3,1)' };
+
+      nav.animate([{ opacity: 0, transform: 'translateY(-16px)' }, { opacity: 1, transform: 'translateY(0)' }],
+        { ...cfg, duration: 180, delay: 0 });
+      badge.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'translateY(0)' }],
+        { ...cfg, duration: 180, delay: 30 });
+      title.animate([{ opacity: 0, transform: 'translateY(32px)' }, { opacity: 1, transform: 'translateY(0)' }],
+        { ...cfg, duration: 200, delay: 60 });
+      sub.animate([{ opacity: 0, transform: 'translateY(20px)' }, { opacity: 1, transform: 'translateY(0)' }],
+        { ...cfg, duration: 180, delay: 100 });
+      acts.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'translateY(0)' }],
+        { ...cfg, duration: 180, delay: 140 });
+      scrl.animate([{ opacity: 0 }, { opacity: 1 }], { ...cfg, duration: 160, delay: 180 });
+    }
+
+    // ═══════════════════════════════════════════════
+    // 3. NAVBAR SCROLL
+    // ═══════════════════════════════════════════════
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('sc', scrollY > 80), { passive: true });
+
+    // ═══════════════════════════════════════════════
+    // 4. CUSTOM CURSOR
+    // ═══════════════════════════════════════════════
+    if (!('ontouchstart' in window)) {
+      const dot = document.getElementById('cur-dot');
+      const ring = document.getElementById('cur-ring');
+      let rx = 0, ry = 0, dx = 0, dy = 0;
+      document.addEventListener('mousemove', e => {
+        dx = e.clientX; dy = e.clientY;
+        dot.style.left = dx + 'px'; dot.style.top = dy + 'px';
+      }, { passive: true });
+      (function rAF() {
+        rx += (dx - rx) * 0.11; ry += (dy - ry) * 0.11;
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+        requestAnimationFrame(rAF);
+      })();
+    } else {
+      document.getElementById('cur-dot').style.display = 'none';
+      document.getElementById('cur-ring').style.display = 'none';
+    }
+
+    // ═══════════════════════════════════════════════
+    // 5. SCROLL REVEAL — IntersectionObserver
+    // ═══════════════════════════════════════════════
+    const rvObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); rvObs.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+    document.querySelectorAll('.rv').forEach(el => rvObs.observe(el));
+
+    // ═══════════════════════════════════════════════
+    // 6. COUNTER ANIMATION
+    // ═══════════════════════════════════════════════
+    const ctObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = +el.dataset.target;
+        const suffix = el.dataset.suffix || '';
+        const t0 = performance.now();
+        const dur = 2000;
+        (function tick(now) {
+          const p = Math.min((now - t0) / dur, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const val = Math.round(target * eased);
+          el.textContent = (target >= 1000 ? val.toLocaleString() : val) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        })(t0);
+        ctObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.ct-n').forEach(el => ctObs.observe(el));
+
+    // ═══════════════════════════════════════════════
+    // 7. FEATURE 1 — PRICING MATRIX (State Isolated)
+    // ═══════════════════════════════════════════════
+    const PRICING = {
+      currencies: {
+        INR: { symbol: '₹', tariff: 1.0 },
+        USD: { symbol: '$', tariff: 0.012 },
+        EUR: { symbol: '€', tariff: 0.011 }
+      },
+      annualDiscount: 0.80,
+      tiers: [
+        { id: 'starter', baseINR: 999 },
+        { id: 'pro', baseINR: 2499 },
+        { id: 'enterprise', baseINR: 7999 }
+      ]
+    };
+    let currency = 'INR', annual = false;
+
+    function calcPrice(baseINR, cur, ann) {
+      return Math.round(baseINR * PRICING.currencies[cur].tariff * (ann ? PRICING.annualDiscount : 1));
+    }
+
+    // CRITICAL: Only mutate text nodes — prevents global reflows
+    // Verified clean under Chrome DevTools Performance panel
+    function syncPriceNodes() {
+      PRICING.tiers.forEach(t => {
+        const price = calcPrice(t.baseINR, currency, annual);
+        const sym = PRICING.currencies[currency].symbol;
+        const per = annual ? '/yr' : '/mo';
+        const vNode = document.querySelector(`[data-price-value="${t.id}"]`);
+        const pNode = document.querySelector(`[data-price-period="${t.id}"]`);
+        const sNode = document.querySelector(`[data-price-symbol="${t.id}"]`);
+        if (vNode) {
+          // Micro-animation on price number only (WAAPI, 180ms ease-out)
+          vNode.animate(
+            [{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'translateY(0)' }],
+            { duration: 180, easing: 'cubic-bezier(0.16,1,0.3,1)', fill: 'forwards' }
+          );
+          vNode.textContent = price.toLocaleString();
+        }
+        if (pNode) pNode.textContent = per;
+        if (sNode) sNode.textContent = sym;
+      });
+    }
+
+    const billingToggle = document.getElementById('billing-toggle');
+    const lblMo = document.getElementById('lbl-mo');
+    const lblYr = document.getElementById('lbl-yr');
+    const svBadge = document.getElementById('sv-badge');
+
+    billingToggle.addEventListener('change', e => {
+      annual = e.target.checked;
+      billingToggle.setAttribute('aria-checked', annual.toString());
+      lblMo.classList.toggle('on', !annual);
+      lblYr.classList.toggle('on', annual);
+      svBadge.classList.toggle('on', annual);
+      syncPriceNodes(); // isolated update
+    });
+
+    document.getElementById('curr-sel').addEventListener('change', e => {
+      currency = e.target.value;
+      syncPriceNodes(); // isolated update
+    });
+
+    // ═══════════════════════════════════════════════
+    // 8. FEATURE 2 — BENTO → ACCORDION + INDEX TRANSFER
+    // ═══════════════════════════════════════════════
+    const FEATS = [
+      {
+        title: 'AI Pipeline Engine', desc: 'Self-healing data pipelines that adapt to schema drift, retry failures intelligently, and scale automatically with your workload.', tag: 'CORE MODULE',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="#f8c800" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>`
+      },
+      {
+        title: 'Real-time Analytics', desc: 'Stream analytics with sub-10ms query latency. Live trends, anomaly detection, and predictive dashboards as your data flows in.', tag: 'ANALYTICS',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><g fill="none" stroke="#f8c800" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z"/><path d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"/></g></svg>`
+      },
+      {
+        title: '500+ Integrations', desc: 'Native connectors for every major warehouse, CRM, and API. Connect any source instantly, zero config.', tag: 'CONNECTIVITY',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"><path fill="none" stroke="#f8c800" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/></svg>`
+      },
+      {
+        title: 'Workflow Automation', desc: 'Zero-code automation chains with AI-suggested optimizations and one-click deploy.', tag: 'AUTOMATION',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><g fill="none" stroke="#f8c800" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z"/><path d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0Z"/></g></svg>`
+      },
+      {
+        title: 'Semantic AI Search', desc: 'Natural language queries across all your data. Ask questions, get answers. No SQL, no data team required.', tag: 'SEARCH',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"><path fill="#f8c800" d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33l-1.42 1.42l-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/></svg>`
+      },
+      {
+        title: 'Growth Intelligence', desc: 'Predictive models that surface opportunities before they become obvious. Revenue forecasting, churn prediction, and market signal detection — all automated with zero setup.', tag: 'AI INTELLIGENCE',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="#f8c800" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 0 1 5.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>`
+      }
+    ];
+
+    let activeIdx = -1; // shared state between both views
+    const BREAK = 1024;
+    let isMobile = window.innerWidth <= BREAK;
+
+    // Chevron down SVG reused in accordion
+    const CHEV_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none"><path stroke="#5a8077" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m19.5 8.25l-7.5 7.5l-7.5-7.5"/></svg>`;
+
+    // ── Build accordion from FEATS data
+    function buildAccordion() {
+      const list = document.getElementById('accList');
+      list.innerHTML = '';
+      FEATS.forEach((f, i) => {
+        const open = i === activeIdx;
+        const item = document.createElement('div');
+        item.className = 'acc-item' + (open ? ' open' : '');
+        item.setAttribute('role', 'listitem');
+        item.dataset.index = i;
+        item.innerHTML = `
+      <div class="acc-hd" role="button" tabindex="0"
+           aria-expanded="${open}"
+           aria-controls="acc-body-${i}"
+           aria-label="${f.title}">
+        <div class="acc-hl">
+          <div class="acc-ic" aria-hidden="true">${f.icon}</div>
+          <span class="acc-ttl">${f.title}</span>
+        </div>
+        <div class="acc-chv" aria-hidden="true">${CHEV_SVG}</div>
+      </div>
+      <div class="acc-body" id="acc-body-${i}" role="region" aria-label="${f.title} details">
+        <div class="acc-bi">
+          <p>${f.desc}</p>
+          <span class="b-tag" style="margin-top:10px;display:inline-block">${f.tag}</span>
+        </div>
+      </div>`;
+        list.appendChild(item);
+        // Set open height immediately
+        if (open) {
+          const body = item.querySelector('.acc-body');
+          body.style.height = item.querySelector('.acc-bi').scrollHeight + 'px';
+        }
+      });
+      // Delegate all clicks/keys
+      list.addEventListener('click', onAccordionInteract);
+      list.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onAccordionInteract(e); }
+      });
+    }
+
+    function onAccordionInteract(e) {
+      const hd = e.target.closest('.acc-hd');
+      if (!hd) return;
+      const item = hd.closest('.acc-item');
+      const idx = +item.dataset.index;
+      setActive(idx === activeIdx ? -1 : idx);
+    }
+
+    // ── Core state setter — updates BOTH views
+    function setActive(idx) {
+      activeIdx = idx;
+
+      // Update bento cards (desktop)
+      document.querySelectorAll('.bc').forEach((c, i) => {
+        c.classList.toggle('act', i === idx);
+        c.setAttribute('aria-pressed', i === idx ? 'true' : 'false');
+      });
+
+      // Update accordion items (mobile) — CSS height transition (no GSAP)
+      document.querySelectorAll('.acc-item').forEach((item, i) => {
+        const body = item.querySelector('.acc-body');
+        const inner = item.querySelector('.acc-bi');
+        const hd = item.querySelector('.acc-hd');
+        const open = i === idx;
+        item.classList.toggle('open', open);
+        hd.setAttribute('aria-expanded', open.toString());
+        body.style.height = open ? inner.scrollHeight + 'px' : '0px';
+      });
+    }
+
+    // ── Bento card click/key/hover
+    document.querySelectorAll('.bc').forEach(card => {
+      card.setAttribute('aria-pressed', 'false');
+      card.addEventListener('click', () => {
+        const i = +card.dataset.index;
+        setActive(i === activeIdx ? -1 : i);
+      });
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const i = +card.dataset.index; setActive(i === activeIdx ? -1 : i);
+        }
+      });
+      // CONTEXT LOCK: track hovered index for resize context transfer
+      card.addEventListener('mouseenter', () => {
+        activeIdx = +card.dataset.index;
+      });
+    });
+
+    buildAccordion();
+
+    // ── CONTEXT LOCK: transfer activeIdx on breakpoint crossing
+    let resizeTmr;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTmr);
+      resizeTmr = setTimeout(() => {
+        drawWorkflowLines();
+        const wasMobile = isMobile;
+        isMobile = window.innerWidth <= BREAK;
+        if (wasMobile === isMobile) return; // same view, nothing to do
+
+        if (isMobile) {
+          // Switched to mobile — rebuild accordion, open correct panel smoothly
+          buildAccordion();
+          if (activeIdx >= 0) {
+            requestAnimationFrame(() => {
+              const items = document.querySelectorAll('.acc-item');
+              const target = items[activeIdx];
+              if (target) {
+                const body = target.querySelector('.acc-body');
+                const inner = target.querySelector('.acc-bi');
+                // Smooth transition (300-400ms ease-in-out as per spec)
+                body.style.height = inner.scrollHeight + 'px';
+                target.classList.add('open');
+                target.querySelector('.acc-hd').setAttribute('aria-expanded', 'true');
+              }
+            });
+          }
+        } else {
+          // Switched to desktop — bento cards sync to activeIdx
+          document.querySelectorAll('.bc').forEach((c, i) => {
+            c.classList.toggle('act', i === activeIdx);
+            c.setAttribute('aria-pressed', i === activeIdx ? 'true' : 'false');
+          });
+        }
+      }, 40);
+    }, { passive: true });
+
+    // ═══════════════════════════════════════════════
+    // 9. THREE.JS — 3D Hero (visual only)
+    // ═══════════════════════════════════════════════
+    (function () {
+      const canvas = document.getElementById('three-canvas');
+      const W = window.innerWidth, H = window.innerHeight;
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      renderer.setSize(W, H);
+      renderer.setClearColor(0x010101, 1);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000);
+      camera.position.set(0, 1.5, 9);
+
+      const clock = new THREE.Clock();
+      let mX = 0, mY = 0, tX = 0, tY = 0;
+      const mobile = W < 640;
+      const PC = mobile ? 700 : 2200;
+
+      // ── Particles
+      const pos = new Float32Array(PC * 3);
+      const col = new Float32Array(PC * 3);
+      const gold = new THREE.Color(0xf8c800);
+      const teal = new THREE.Color(0x114c5a);
+      const mint = new THREE.Color(0xd9e8e3);
+      for (let i = 0; i < PC; i++) {
+        pos[i * 3] = (Math.random() - .5) * 90;
+        pos[i * 3 + 1] = (Math.random() - .5) * 65;
+        pos[i * 3 + 2] = (Math.random() - .5) * 70;
+        const r = Math.random();
+        const c = r < .6 ? teal : r < .82 ? mint : gold;
+        col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
+      }
+      const pGeo = new THREE.BufferGeometry();
+      pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      pGeo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+      const pMat = new THREE.PointsMaterial({ size: .07, vertexColors: true, transparent: true, opacity: .65, sizeAttenuation: true });
+      const particles = new THREE.Points(pGeo, pMat);
+      scene.add(particles);
+
+      // ── Icosahedron shell + wireframe
+      const icoG = new THREE.IcosahedronGeometry(2, 1);
+      const icoShell = new THREE.Mesh(icoG, new THREE.MeshPhongMaterial({ color: 0x114c5a, emissive: 0x091e26, transparent: true, opacity: .14 }));
+      const icoWire = new THREE.Mesh(icoG, new THREE.MeshBasicMaterial({ color: 0xf8c800, wireframe: true, transparent: true, opacity: .32 }));
+      scene.add(icoShell); scene.add(icoWire);
+
+      // ── Lights
+      scene.add(new THREE.AmbientLight(0x172b36, 1.8));
+      const lGold = new THREE.PointLight(0xf8c800, 3, 22);
+      const lTeal = new THREE.PointLight(0x1a6b7e, 3, 22);
+      scene.add(lGold); scene.add(lTeal);
+
+      // ── Grid floor
+      const grid = new THREE.GridHelper(80, 28, 0x114c5a, 0x091820);
+      grid.position.y = -5;
+      grid.material.transparent = true; grid.material.opacity = .35;
+      scene.add(grid);
+
+      // ── Mouse/touch parallax
+      document.addEventListener('mousemove', e => {
+        mX = (e.clientX / innerWidth - .5) * 2;
+        mY = (e.clientY / innerHeight - .5) * 2;
+      }, { passive: true });
+      document.addEventListener('touchmove', e => {
+        const t = e.touches[0];
+        mX = (t.clientX / innerWidth - .5) * 2;
+        mY = (t.clientY / innerHeight - .5) * 2;
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+      }, { passive: true });
+
+      // ── Render loop (60fps via clock)
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+        clock.getDelta(); // pace check
+
+        tX += (mX * 1.4 - tX) * .045;
+        tY += (-mY * .9 - tY) * .045;
+        camera.position.x = tX; camera.position.y = tY + 1.5;
+        camera.lookAt(0, 0, 0);
+
+        particles.rotation.y += .00025;
+        particles.rotation.x += .00008;
+        pMat.opacity = .5 + Math.sin(t * .45) * .15;
+
+        icoShell.rotation.x += .0025; icoShell.rotation.y += .004;
+        icoWire.rotation.x = icoShell.rotation.x;
+        icoWire.rotation.y = icoShell.rotation.y;
+        const bob = Math.sin(t * .5) * .28;
+        icoShell.position.y = bob; icoWire.position.y = bob;
+
+        lGold.position.set(Math.sin(t * .65) * 5, Math.cos(t * .5) * 3, Math.cos(t * .65) * 5);
+        lTeal.position.set(Math.cos(t * .55) * 5, Math.sin(t * .4) * 3, Math.sin(t * .55) * 5);
+        grid.position.z = (t * .45) % 2.5;
+
+        renderer.render(scene, camera);
+      }
+      animate();
+    })();
+
+    // ═══════════════════════════════════════════════
+    // 10. INTERACTIVE WORKFLOW BUILDER LINES
+    // ═══════════════════════════════════════════════
+    function drawWorkflowLines() {
+        const canvas = document.querySelector('.wf-canvas');
+        const svg = document.querySelector('.wf-svg-layer');
+        if (!canvas || !svg) return;
+
+        svg.innerHTML = '';
+        const canvasRect = canvas.getBoundingClientRect();
+
+        const connections = [
+          { from: 'node-webhook', to: ['node-ai'] },
+          { from: 'node-email', to: ['node-ai'] },
+          { from: 'node-ai', to: ['node-slack', 'node-db'] },
+          { from: 'node-python', to: ['node-db'] }
+        ];
+
+        connections.forEach(conn => {
+          const fromEl = document.getElementById(conn.from);
+          if (!fromEl) return;
+          const fromRect = fromEl.getBoundingClientRect();
+          const x1 = (fromRect.left + fromRect.width) - canvasRect.left;
+          const y1 = (fromRect.top + fromRect.height / 2) - canvasRect.top;
+
+          conn.to.forEach(targetId => {
+            const toEl = document.getElementById(targetId);
+            if (!toEl) return;
+            const toRect = toEl.getBoundingClientRect();
+            const x2 = toRect.left - canvasRect.left;
+            const y2 = (toRect.top + toRect.height / 2) - canvasRect.top;
+
+            // Draw bezier connection curves
+            const cp1x = x1 + (x2 - x1) * 0.45;
+            const cp1y = y1;
+            const cp2x = x1 + (x2 - x1) * 0.55;
+            const cp2y = y2;
+
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+             const dVal = `M ${x1} ${y1} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2}`;
+             path.setAttribute('d', dVal);
+
+             // Line is active if both ends are active
+             const isActive = fromEl.classList.contains('act') && toEl.classList.contains('act');
+             path.setAttribute('class', `wf-flow-line${isActive ? ' active' : ''}`);
+
+             svg.appendChild(path);
+
+             if (isActive) {
+               const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+               dot.setAttribute('r', '3');
+               dot.setAttribute('fill', 'var(--gold)');
+               dot.style.offsetPath = `path('${dVal}')`;
+               dot.style.animation = `pulseMove ${1.8 + Math.random() * 1.2}s linear infinite`;
+               dot.style.filter = 'drop-shadow(0 0 2px var(--gold))';
+               svg.appendChild(dot);
+             }
+          });
+        });
+      }
+
+      document.querySelectorAll('.wf-node').forEach(node => {
+        node.addEventListener('click', () => {
+          node.classList.toggle('act');
+          drawWorkflowLines();
+        });
+        node.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            node.classList.toggle('act');
+            drawWorkflowLines();
+          }
+        });
+      });
+
+      window.addEventListener('load', () => {
+        drawWorkflowLines();
+        setTimeout(drawWorkflowLines, 200); // safety fallback for layout positioning
+      });
+
+      // ═══════════════════════════════════════════════
+      // 11. LIVE PERFORMANCE DASHBOARD CHARTS
+      // ═══════════════════════════════════════════════
+      (function () {
+        const fill = document.getElementById('radial-fill');
+        const text = document.getElementById('radial-val');
+        const path = document.querySelector('.line-chart-path');
+        const chartFill = document.querySelector('.line-chart-fill');
+        const loadVal = document.getElementById('db-val-load');
+        const latencyVal = document.getElementById('db-val-latency');
+        const tokenVal = document.getElementById('db-val-tokens');
+        const rateVal = document.getElementById('db-val-rate');
+
+        if (!fill || !path) return;
+
+        // Generate initial dataset
+        const count = 10;
+        const data = Array.from({ length: count }, () => 60 + Math.random() * 50);
+
+        function updateChart() {
+          // Add random walk value
+          const base = 85;
+          const next = Math.max(30, Math.min(130, base + (Math.random() - 0.5) * 40));
+          data.push(next);
+          data.shift();
+
+          // Draw bezier curves
+          let pathD = `M 0 ${data[0]}`;
+          const dx = 400 / (count - 1);
+
+          for (let i = 0; i < count - 1; i++) {
+            const x1 = i * dx;
+            const y1 = data[i];
+            const x2 = (i + 1) * dx;
+            const y2 = data[i + 1];
+            const cpx1 = x1 + dx * 0.5;
+            const cpx2 = x2 - dx * 0.5;
+            pathD += ` C ${cpx1} ${y1}, ${cpx2} ${y2}, ${x2} ${y2}`;
+          }
+
+          path.setAttribute('d', pathD);
+          chartFill.setAttribute('d', pathD + ` L 400 140 L 0 140 Z`);
+
+          // Fluctuating load gauge values
+          const loadPercent = Math.round(75 + Math.random() * 22);
+          const offset = 251.2 - (251.2 * loadPercent) / 100;
+          fill.style.strokeDashoffset = offset;
+          text.textContent = loadPercent + '%';
+
+          // 1. Pipeline Throughput (e.g. 92,000 - 97,000 eps)
+          if (loadVal) {
+            const eps = Math.round(92400 + Math.random() * 4400);
+            loadVal.textContent = eps.toLocaleString() + ' eps';
+          }
+
+          // 2. Query Latency (e.g. 5.8ms - 7.4ms)
+          if (latencyVal) {
+            const lat = (5.8 + Math.random() * 1.6).toFixed(1);
+            latencyVal.textContent = lat + 'ms';
+          }
+
+          // 3. Active Connectors (e.g. 512 - 515)
+          if (tokenVal) {
+            const conn = Math.floor(512 + Math.random() * 4);
+            tokenVal.textContent = conn.toString();
+          }
+
+          // 4. Automation Rate (e.g. 95.8% - 97.2%)
+          if (rateVal) {
+            const rate = (95.8 + Math.random() * 1.4).toFixed(1);
+            rateVal.textContent = rate + '%';
+          }
+        }
+
+        // Update chart loop
+        setInterval(updateChart, 1500);
+        updateChart();
+      })();
+
+      // ═══════════════════════════════════════════════
+      // 12. FAQ ACCORDION HANDLERS
+      // ═══════════════════════════════════════════════
+      document.querySelectorAll('.faq-hd').forEach(hd => {
+        hd.addEventListener('click', () => {
+          const item = hd.closest('.faq-item');
+          const body = item.querySelector('.faq-body');
+          const inner = item.querySelector('.faq-bi');
+          const open = item.classList.toggle('open');
+          hd.setAttribute('aria-expanded', open ? 'true' : 'false');
+          body.style.height = open ? inner.scrollHeight + 'px' : '0px';
+        });
+        hd.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            hd.click();
+          }
+        });
+      });
+
+      // ═══════════════════════════════════════════════
+      // 13. SCROLL-TO-TOP BUTTON (chevron-up-solid.svg)
+      // ═══════════════════════════════════════════════
+      const scrollBtn = document.getElementById('scroll-top');
+      window.addEventListener('scroll', () => {
+        scrollBtn.classList.toggle('vis', scrollY > 400);
+      }, { passive: true });
+      scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // ═══════════════════════════════════════════════
+      // 11. MOBILE MENU (x-mark.svg + chevron-left.svg)
+      // ═══════════════════════════════════════════════
+      const mobOverlay = document.getElementById('mob-overlay');
+      const mobOpen = document.getElementById('mob-open');
+      const mobClose = document.getElementById('mob-close');
+      const siteHeader = document.getElementById('site-header');
+
+      function openMobMenu() {
+        mobOverlay.classList.add('open');
+        document.body.classList.add('nav-open');
+        // Hide the header so it doesn't bleed through the overlay
+        siteHeader.style.visibility = 'hidden';
+        mobClose.focus();
+      }
+
+      function closeMobMenu() {
+        mobOverlay.classList.remove('open');
+        document.body.classList.remove('nav-open');
+        // Restore the header
+        siteHeader.style.visibility = '';
+      }
+
+      mobOpen.addEventListener('click', openMobMenu);
+      mobClose.addEventListener('click', closeMobMenu);
+      mobOverlay.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMobMenu);
+      });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && mobOverlay.classList.contains('open')) {
+          closeMobMenu();
+        }
+      });
+
+      // ═══════════════════════════════════════════════
+      // 12. KONAMI CODE EASTER EGG
+      // ═══════════════════════════════════════════════
+      const KONAMI = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+      let kp = 0;
+      document.addEventListener('keydown', e => {
+        kp = e.keyCode === KONAMI[kp] ? kp + 1 : 0;
+        if (kp === KONAMI.length) {
+          kp = 0;
+          const flash = document.createElement('div');
+          flash.style.cssText = 'position:fixed;inset:0;z-index:9990;pointer-events:none;background:radial-gradient(circle,rgba(248,200,0,.25),transparent 68%)';
+          document.body.appendChild(flash);
+          flash.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 700, easing: 'ease-in-out' })
+            .finished.then(() => flash.remove());
+          for (let i = 0; i < 24; i++) {
+            const p = document.createElement('div');
+            const ang = (i / 24) * 360, dist = 180 + Math.random() * 180;
+            p.style.cssText = `position:fixed;left:50%;top:50%;width:5px;height:5px;border-radius:50%;z-index:9991;pointer-events:none;background:${Math.random() > .5 ? '#f8c800' : '#f89830'}`;
+            document.body.appendChild(p);
+            const rad = ang * Math.PI / 180;
+            p.animate([
+              { transform: 'translate(-50%,-50%) scale(1)', opacity: 1 },
+              { transform: `translate(calc(-50% + ${Math.cos(rad) * dist}px),calc(-50% + ${Math.sin(rad) * dist}px)) scale(0)`, opacity: 0 }
+            ], { duration: 750, easing: 'cubic-bezier(0,1,.5,1)', fill: 'forwards' })
+              .finished.then(() => p.remove());
+          }
+        }
+      });
+  </script>
+</body>
+
+</html>
