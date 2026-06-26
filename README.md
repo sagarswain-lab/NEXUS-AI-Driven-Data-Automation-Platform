@@ -12,7 +12,7 @@
 | **Live Deployment** | [https://sagarswain-lab.github.io/NEXUS-AI-Driven-Data-Automation-Platform/](https://sagarswain-lab.github.io/NEXUS-AI-Driven-Data-Automation-Platform/) |
 
 ### Walkthrough Video
-<video src="video.mp4" width="100%" autoplay loop muted playsinline controls></video>
+<video src="https://github.com/sagarswain-lab/NEXUS-AI-Driven-Data-Automation-Platform/raw/main/video.mp4" width="100%" autoplay loop muted playsinline controls></video>
 
 ---
 
@@ -100,8 +100,7 @@ IntersectionObserver watches .rv (reveal) elements with stagger delays via .d1�
 - Six nodes across three columns: Triggers → Processing → Outputs
 - SVG <path> connectors with stroke-dasharray + stroke-dashoffset animated flow
 - Animated SVG <circle> dots travel paths using CSS offset-path
-- Active nodes pulse with a 
-odeActGlow drop-shadow keyframe
+- Active nodes pulse with a nodeActGlow drop-shadow keyframe
 - **Mobile fallback**: vertical golden gradient line + gold left-border on active nodes
 
 ### Performance Counters
@@ -137,7 +136,7 @@ JS random-walk loop updates four live metrics every 1,200ms:
 
 ## SEO Implementation
 
-`html
+```html
 <!-- Title & Meta Description -->
 <title>NEXUS | AI-Driven Data Automation Platform</title>
 <meta name="description" content="...">
@@ -160,30 +159,33 @@ JS random-walk loop updates four live metrics every 1,200ms:
 <!-- JSON-LD Structured Data -->
 <script type="application/ld+json">
   {
+    "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "NEXUS",
     "applicationCategory": "BusinessApplication",
-    "offers": { "@type": "AggregateOffer", "priceCurrency": "INR" }
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "INR"
+    }
   }
 </script>
-`
+```
 
 Additional SEO practices:
-- Single <h1> per page with proper heading hierarchy
-- Semantic HTML5 landmarks (<header>, <main>, <section>, <footer>, <nav>)
-- All SVGs carry ria-hidden="true" or a descriptive ria-label
-- All interactive elements have unique, descriptive id attributes
+- Single `<h1>` per page with proper heading hierarchy
+- Semantic HTML5 landmarks (`<header>`, `<main>`, `<section>`, `<footer>`, `<nav>`)
+- All SVGs carry `aria-hidden="true"` or a descriptive `aria-label`
+- All interactive elements have unique, descriptive `id` attributes
 
 ---
 
 ## Accessibility
 
 - All interactive elements keyboard-focusable with visible focus indicators
-- ARIA roles used: 
-avigation, dialog, list, listitem, utton, switch, rticle
-- Dynamic attributes: ria-modal, ria-label, ria-live, ria-checked, ria-expanded
-- @media (prefers-reduced-motion: reduce) disables all transitions and animations globally
-- Mobile menu focus-trap — mobClose.focus() is called on open
+- ARIA roles used: `navigation`, `dialog`, `list`, `listitem`, `button`, `switch`, `article`
+- Dynamic attributes: `aria-modal`, `aria-label`, `aria-live`, `aria-checked`, `aria-expanded`
+- `@media (prefers-reduced-motion: reduce)` disables all transitions and animations globally
+- Mobile menu focus-trap — `mobClose.focus()` is called on open
 
 ---
 
@@ -191,9 +193,9 @@ avigation, dialog, list, listitem, utton, switch, rticle
 
 Type the **Konami Code** on any keyboard:
 
-`
+```
 ↑  ↑  ↓  ↓  ←  →  ←  →  B  A
-`
+```
 
 A golden particle burst explosion fires from the centre of the screen.
 
@@ -201,21 +203,21 @@ A golden particle burst explosion fires from the centre of the screen.
 
 ## Project Structure
 
-`
+```
 FrontEnd Battle 3.0/
 ├── index.html     <- Entire project (HTML + embedded CSS + embedded JS, ~3,700 lines)
 └── README.md      <- This file
-`
+```
 
-All styles are in a <style> block inside <head>.  
-All scripts are in a <script> block before </body>.  
+All styles are in a `<style>` block inside `<head>`.  
+All scripts are in a `<script>` block before `</body>`.  
 **No build step. No bundler. No npm. Open in any browser.**
 
 ---
 
 ## Running Locally
 
-`ash
+```bash
 # Option 1 — Open directly in browser
 start index.html
 
@@ -226,7 +228,7 @@ start index.html
 # Option 3 — Python HTTP server
 python -m http.server 3000
 # Visit http://localhost:3000
-`
+```
 
 ---
 
