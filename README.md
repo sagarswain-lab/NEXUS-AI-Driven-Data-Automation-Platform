@@ -1,17 +1,15 @@
-﻿# NEXUS - AI-Driven Data Automation Platform
+# NEXUS - AI-Driven Data Automation Platform
 
 > **FrontEnd Battle 3.0 - Phase 1 Submission**
 > *Next-Gen AI Platform Speed Run - 26 June 2026*
 
 ---
 
-## Live Demo & Resources
+## Live Demo
 
 | Resource | Link |
 |---|---|
-| **Live Deployment** | <!-- ADD YOUR LIVE DEPLOYMENT LINK HERE --> |
-| **Demo Video** | <!-- ADD YOUR .MP4 / DRIVE VIDEO LINK HERE --> |
-| **GitHub Repository** | *(this repo)* |
+| **Live Deployment** | [https://sagarswain-lab.github.io/NEXUS-AI-Driven-Data-Automation-Platform/](https://sagarswain-lab.github.io/NEXUS-AI-Driven-Data-Automation-Platform/) |
 
 ---
 
