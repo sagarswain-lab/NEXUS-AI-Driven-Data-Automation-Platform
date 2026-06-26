@@ -11,6 +11,9 @@
 |---|---|
 | **Live Deployment** | [https://sagarswain-lab.github.io/NEXUS-AI-Driven-Data-Automation-Platform/](https://sagarswain-lab.github.io/NEXUS-AI-Driven-Data-Automation-Platform/) |
 
+### Walkthrough Video
+<video src="video.mp4" width="100%" autoplay loop muted playsinline controls></video>
+
 ---
 
 ## Project Overview
